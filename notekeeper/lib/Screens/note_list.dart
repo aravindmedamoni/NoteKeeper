@@ -26,7 +26,7 @@ class _NoteListState extends State<NoteList> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Your Future Tasks'),
+        title: Text('Your Imp Notes'),
       ),
       body: getNoteListView(),
       floatingActionButton: FloatingActionButton(
