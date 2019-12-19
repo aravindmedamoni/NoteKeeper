@@ -7,10 +7,9 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Note keeper App',
+      title: 'IMP Note',
       theme: ThemeData(
-       // primaryColorDark: Colors.blue[900],
-        primaryColor: Colors.deepPurple[700],
+        primaryColor: Colors.purple,
       ),
       debugShowCheckedModeBanner: false,
       home:NoteList()

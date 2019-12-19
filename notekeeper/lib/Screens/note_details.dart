@@ -41,19 +41,22 @@ class _NoteDetailsState extends State<NoteDetails> {
           Padding(
             padding: EdgeInsets.only(top: 13.0,right: 100.0,left: 15.0),
             child: ListTile(
-              title: DropdownButton(
-                  items: _properties.map((String dropDownStringItem) {
-                    return DropdownMenuItem<String>(
-                        value: dropDownStringItem,
-                        child: Text(dropDownStringItem));
-                  }).toList(),
-                  //style: textStyle,
-                  value: updatePriorityAsString(note.priority),
-                  onChanged: (valueSelectedByUser) {
-                    setState(() {
-                      updatePriorityAsInt(valueSelectedByUser);
-                    });
-                  }),
+              title: Align(
+                alignment: Alignment.topLeft,
+                child: DropdownButton(
+                    items: _properties.map((String dropDownStringItem) {
+                      return DropdownMenuItem<String>(
+                          value: dropDownStringItem,
+                          child: Text(dropDownStringItem));
+                    }).toList(),
+                    //style: textStyle,
+                    value: updatePriorityAsString(note.priority),
+                    onChanged: (valueSelectedByUser) {
+                      setState(() {
+                        updatePriorityAsInt(valueSelectedByUser);
+                      });
+                    }),
+              ),
             ),
           ),
           SizedBox(
@@ -105,22 +108,34 @@ class _NoteDetailsState extends State<NoteDetails> {
               children: <Widget>[
                 Expanded(
                   child: Material(
-                    color: Colors.blue[900],
+                    //color: Colors.deepPurpleAccent,
+                    elevation: 5.0,
                     borderRadius: BorderRadius.circular(18.0),
-                    child: MaterialButton(
-                        onPressed: (){
-                          setState(() {//when you click on save button below function will execute
-                            _saveNote();
-                            Navigator.pop(context, true);
-
-                          });
-                        },
-                      child: Text(
-                        'Save',
-                      style: TextStyle(
-                        color: Colors.white,
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Color(0xff64B6FF),Colors.purpleAccent],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                        ),
+                          borderRadius: BorderRadius.circular(18.0),
                       ),
-                      textScaleFactor: 1.5,
+                      child: MaterialButton(
+                          onPressed: (){
+                            setState(() {//when you click on save button below function will execute
+                              if(titleController.text.isNotEmpty && descriptionController.text.isNotEmpty){
+                                _saveNote();
+                              }
+                              Navigator.pop(context, true);
+
+                            });
+                          },
+                        child: Text(
+                          'Save',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                        textScaleFactor: 1.5,
+                        ),
                       ),
                     ),
                   ),
@@ -130,21 +145,31 @@ class _NoteDetailsState extends State<NoteDetails> {
                 ),
                 Expanded(
                   child: Material(
-                    color: Colors.blue[900],
+                  //  color: Colors.purple[200],
+                    elevation: 5.0,
                     borderRadius: BorderRadius.circular(18.0),
-                    child: MaterialButton(
-                      onPressed: (){
-                        setState(() {//when you click on delete button below function will execute
-                          _deleteNote();
-                          Navigator.pop(context,true);
-                        });
-                      },
-                      child: Text(
-                        'Delete',
-                        style: TextStyle(
-                          color: Colors.white,
+                    child: Ink(
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(colors: [Colors.deepPurpleAccent,Colors.purpleAccent],
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
                         ),
-                        textScaleFactor: 1.5,
+                        borderRadius: BorderRadius.circular(18.0),
+                      ),
+                      child: MaterialButton(
+                        onPressed: (){
+                          setState(() {//when you click on delete button below function will execute
+                            _deleteNote();
+                            Navigator.pop(context,true);
+                          });
+                        },
+                        child: Text(
+                          'Delete',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                          textScaleFactor: 1.5,
+                        ),
                       ),
                     ),
                   ),
@@ -199,7 +224,8 @@ void _saveNote() async{
     int result;
     if(note.id != null){// it will update the note that is already exist
       result = await helper.updateNote(note);
-    }else{// in this case it will create the new note in the database
+    }else{//
+      // in this case it will create the new note in the database
       result = await helper.insertNote(note);
     }
 
