@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:sqflite/sqflite.dart';
 import 'package:notekeeper/Utils/database_helper.dart';
 import 'package:notekeeper/Models/note.dart';
+import 'package:notekeeper/Components/fancy_floating_action_button.dart';
 
 class NoteList extends StatefulWidget {
   @override
@@ -29,14 +30,17 @@ class _NoteListState extends State<NoteList> {
         title: Text('Your Imp Notes'),
       ),
       body: getNoteListView(),
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Theme.of(context).primaryColor,
-        tooltip: 'Add Note',
-        onPressed: () {
-         navigateToDetails(Note('', '', 2), 'Add Note');
-        },
-        child: Icon(Icons.add),
-      ),
+      floatingActionButton:FancyFloatingActionButton(onPressed: (){
+        navigateToDetails(Note('', '', 2), 'Add Note');
+      },),
+//      FloatingActionButton(
+//        backgroundColor: Theme.of(context).primaryColor,
+//        tooltip: 'Add Note',
+//        onPressed: () {
+//         navigateToDetails(Note('', '', 2), 'Add Note');
+//        },
+//        child: Icon(Icons.add),
+//      ),
     );
   }
 
